@@ -15,9 +15,10 @@
 <h1>This page will show all the authors</h1>
 <% authorsList.forEach(function(author) { %>
 <div>
-  <a href="/authors/<%= author.id %>"><%= author.firstName %></a>
+  <%= author.firstName %>
   <div>
     <%= author.lastName %>
+    <%= author.age %>
   </div>
 </div>
 <% }) %>

@@ -13,11 +13,17 @@
 </nav>
 
 	<h1>This page will show all the posts</h1>
-	<h1>This page will show all the authors</h1>
-	<%= postsToDisplay.title %>
-
-	<ul>
-	  	<li>Content: <%= postsToDisplay.content  %></li>
-  	</ul>
+  <div>
+    <h2>
+      <%= post.title %>
+    </h2>
+    <h2>
+      <%= post.content %>
+  </div>
+  <div>
+    <form action="/posts/<%= post.id %>?_method=DELETE" method="post">
+      <button class="delete">DELETE</button>
+    </form>
+  </div>
 </body>
 </html>

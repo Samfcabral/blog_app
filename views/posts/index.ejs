@@ -16,11 +16,11 @@
 
 <% postsList.forEach(function(post) { %>
 <div>
-  <a href="/posts/<%= post.id %>"><%= post.title %></a>
+  <%= post.title %>
   <div>
     <%= post.content %>
   </div>
 </div>
-<% }) %>
+<% }) %> 
 </body>
 </html>

@@ -28,7 +28,7 @@ app.get("/authors", function (req, res) {
 });
 
 app.post("/authors", function (req, res) {
-	db.authors.create( {
+	db.author.create( {
 		firstName: req.body.author.firstName,
 		lastName: req.body.author.lastName,
 		age: req.body.author.age
@@ -39,22 +39,6 @@ app.post("/authors", function (req, res) {
 
 app.get("/authors/new", function (req, res) {
   res.render("authors/new");
-});
-
-app.get("/posts", function (req, res) {
-	db.author.findAll()
-	.then(function(author) {
-		res.render("authors/index", {postsList: posts});		
-	})
-});
-
-app.post("/posts", function (req, res) {
-	db.posts.create( {
-		title: req.body.posts.title,
-		content: req.body.posts.content
-	})
-	console.log(req.body.author);
-	res.redirect("/authors");
 });
 
 app.get("/authors/:id/edit", function (req, res) {
@@ -79,9 +63,33 @@ app.put("/authors/:id", function (req, res) {
 		})
 });
 
-app.get("/posts/new", function (req, res) {
+app.get("/posts", function (req, res) {
+  db.post.findAll().then(function(posts){
+    res.render("posts/index"), {postList: posts};
+  })
+});
+
+app.post("/posts",  function (req, res) {
+  db.post.create({
+    title: req.body.post.title,
+    content: req.body.post.content
+  })
+  console.log(req.body.post);
+  res.redirect("/posts");
+});
+
+app.get("/posts/new", function(req, res){ 
   res.render("posts/new");
 });
+
+
+app.get("/posts/:id", function(req, res) {
+  db.post.find(req.params.id)
+  .then(function(posts) {
+    res.render("posts/show", {postsList: post});
+  })
+});
+
 
 
 db.sequelize.sync().then(function() {
