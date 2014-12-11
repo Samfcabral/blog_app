@@ -28,13 +28,25 @@ app.get("/authors", function (req, res) {
 });
 
 app.post("/authors", function (req, res) {
-	db.author.create( {
-		firstName: req.body.author.firstName,
-		lastName: req.body.author.lastName,
-		age: req.body.author.age
-	})
-	console.log(req.body.author);
-	res.redirect("/authors");
+    db.author.create({
+        firstName: req.body.author.firstName,
+        lastName: req.body.author.lastName,
+        age: req.body.age
+    }).then(function (newAuthor) {
+        res.redirect("/authors/" + newAuthor.id);
+    });
+});
+
+app.get("/authors/:id", function (req, res) {
+    // we need to find the author by the id.
+    var id = req.params.id;
+    db.author.find({
+        where: {id: id},
+        include: [db.post]
+    })
+    .then(function (foundAuthor) {
+        res.render("authors/show", {author: foundAuthor});
+    });
 });
 
 app.get("/authors/new", function (req, res) {
